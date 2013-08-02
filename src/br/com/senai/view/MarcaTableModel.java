@@ -34,12 +34,10 @@ public class MarcaTableModel extends AbstractTableModel {
 
         if (columnIndex == COL_ID) {
             return m.getId();
-        } else (COL_NOME == COL_NOME){
+        } else if(COL_NOME == COL_NOME){
         
         
-        {
+        
             return m.getNome();
-        }
+        
     }
-
-
