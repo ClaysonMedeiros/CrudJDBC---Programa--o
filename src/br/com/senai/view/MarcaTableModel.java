@@ -5,6 +5,7 @@
 package br.com.senai.view;
 
 import br.com.senai.modelo.negosio.Marca;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -19,17 +20,77 @@ public class MarcaTableModel extends AbstractTableModel {
     private List<Marca> linhas;
     private String[] colunas = {"Id", "Nome"};
 
-    @Override
+    public MarcaTableModel(){
+        linhas = new ArrayList<Marca>();
+    }
+    
+    public MarcaTableModel(List<Marca> marcas){
+         linhas = new ArrayList<Marca>();
+    }
+    
+    public String getColumnName(int columnIndex){
+        return colunas[columnIndex];
+    }
+    
+    public Class getColumnClass(int columnindex){
+        if(columnindex == COL_ID){
+            return Integer.class;                        
+        }else if(columnindex == COL_NOME){
+            return String.class;
+        }        
+        return null;
+    }    
+    
+    //Indica se a célula é editavel
+    public boolean isCellEditable(int rowIndex, int columnIndex){
+        return false;
+    }
+    
+    public Marca getMarca(int indiceLinha){
+        return linhas.get(indiceLinha);
+    }
+    
+    public void addMarca(Marca marca){
+        //adiciona o registro
+        linhas.add(marca);
+        
+        //Pega a quantidade de registros (os registros começam com zero
+        int ultimoIndice = getRowCount() -1;
+        
+        //Notifica a mudança
+        fireTableRowsInserted(ultimoIndice, ultimoIndice);
+    }   
+    
+    /**
+     * Atualiza uma linha
+     */
+    public void updateMarca(int indiceLinha, Marca marca){
+        linhas.set(indiceLinha, marca);
+        fireTableRowsUpdated(indiceLinha, indiceLinha);
+        
+    }
+    
+    public void removeMarca(int indiceLinha){
+        linhas.remove(indiceLinha);
+        fireTableRowsDeleted(indiceLinha, indiceLinha);               
+    }
+    
+    /**
+     * remove todos os registros
+     */
+    public void limpar(){
+        linhas.clear();
+    }
+    
     public int getRowCount() {
         return linhas.size();
     }
 
-    @Override
     public int getColumnCount() {
         return colunas.length;
     }
 
-    @Override
+
     public Object getValueAt(int rowIndex, int columnIndex) {
         Marca m = linhas.get(rowIndex);
 
