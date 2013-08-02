@@ -4,6 +4,7 @@
  */
 package br.com.senai.view;
 
+import br.com.senai.modelo.negosio.Marca;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -30,14 +31,37 @@ public class MarcaTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Marca m = linhas.getClass(row);
+        Marca m = linhas.get(rowIndex);
 
         if (columnIndex == COL_ID) {
             return m.getId();
-        } else if(COL_NOME == COL_NOME){
-        
-        
-        
+        } else if (COL_NOME == COL_NOME) {
             return m.getNome();
-        
+        }
+        return " ";
     }
+    
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex){
+        Marca m = linhas.get(rowIndex);
+        
+        if (columnIndex == COL_ID ){
+            m.setId((Integer)aValue);           
+        }else if( columnIndex == COL_NOME ){
+            m.setNome(aValue.toString());
+        }
+            
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
